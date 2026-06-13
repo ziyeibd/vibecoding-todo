@@ -9,13 +9,20 @@
   const saveNoteButton = document.getElementById("saveNoteButton");
   const noteList = document.getElementById("noteList");
   const clearNotesButton = document.getElementById("clearNotesButton");
-
+  const emptyMessage = document.getElementById("emptyMessage");
+ 
   let notes = JSON.parse(localStorage.getItem("notes")) || [];
  function saveNotes() {
   localStorage.setItem("notes", JSON.stringify(notes));
 }
  function renderNotes() {
   noteList.innerHTML = "";
+  if (notes.length === 0) {
+    emptyMessage.textContent = "暂无任务，添加一个开始吧。";
+    return;
+  }
+
+  emptyMessage.textContent = "";
 
   for (let index = 0; index < notes.length; index++) {
     const note = notes[index];

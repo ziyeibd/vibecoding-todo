@@ -41,3 +41,7 @@ body {
   margin: 4px;
   cursor: pointer;
   }   
+  #emptyMessage {
+  color: #777777;
+  font-style: italic;
+}
