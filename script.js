@@ -41,9 +41,8 @@ const showCompletedButton = document.getElementById("showCompletedButton");
     });
   }
 
-  for (let index = 0; index < notes.length; index++) {
-    const note = visibleNotes[index];
-    const originalIndex = notes.indexOf(note);
+ for (let index = 0; index < visibleNotes.length; index++) {
+  const note = visibleNotes[index];
 
     noteList.innerHTML =
       noteList.innerHTML +
@@ -62,7 +61,7 @@ const showCompletedButton = document.getElementById("showCompletedButton");
       "</li>";
   }
 }
-function deleteNote(index) {
+function deleteNote(id) {
    notes = notes.filter(function(note) {
     return note.id !== id;
   });
@@ -70,7 +69,7 @@ function deleteNote(index) {
   renderNotes();
 }
 
-function toggleNote(index) {
+function toggleNote(id) {
  for (let index = 0; index < notes.length; index++) {
     if (notes[index].id === id) {
       notes[index].completed = !notes[index].completed;
