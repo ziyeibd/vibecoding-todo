@@ -78,6 +78,9 @@ function renderStats() {
      " <button onclick='toggleNote(" +
       note.id +
       ")'>完成/取消</button>" +
+      " <button onclick='editNote(" +
+      note.id +
+      ")'>编辑</button>" +
       " <button onclick='deleteNote(" +
       note.id +
       ")'>删除</button>" +
@@ -100,6 +103,28 @@ function toggleNote(id) {
       notes[index].completed = !notes[index].completed;
     }
   }
+  saveNotes();
+  renderNotes();
+}
+
+function editNote(id) {
+  for (let index = 0; index < notes.length; index++) {
+    if (notes[index].id === id) {
+      const newText = prompt("修改任务", notes[index].text);
+
+      if (newText === null) {
+        return;
+      }
+
+      if (newText.trim() === "") {
+        alert("任务不能为空");
+        return;
+      }
+
+      notes[index].text = newText.trim();
+    }
+  }
+
   saveNotes();
   renderNotes();
 }
