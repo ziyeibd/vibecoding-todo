@@ -13,12 +13,35 @@ const showCompletedButton = document.getElementById("showCompletedButton");
   const clearNotesButton = document.getElementById("clearNotesButton");
   const emptyMessage = document.getElementById("emptyMessage");
  
+  const statsText = document.getElementById("statsText");
+  
   let notes = JSON.parse(localStorage.getItem("notes")) || [];
   let currentFilter = "all";
   function saveNotes() {
   localStorage.setItem("notes", JSON.stringify(notes));
 }
+
+function renderStats() {
+  const totalCount = notes.length;
+
+  const completedCount = notes.filter(function(note) {
+    return note.completed === true;
+  }).length;
+
+  const activeCount = totalCount - completedCount;
+
+  statsText.textContent =
+    "总数：" +
+    totalCount +
+    "，已完成：" +
+    completedCount +
+    "，未完成：" +
+    activeCount;
+}
+
  function renderNotes() {
+  renderStats()
+  
   noteList.innerHTML = "";
   if (notes.length === 0) {
     emptyMessage.textContent = "暂无任务，添加一个开始吧。";
@@ -61,6 +84,8 @@ const showCompletedButton = document.getElementById("showCompletedButton");
       "</li>";
   }
 }
+
+
 function deleteNote(id) {
    notes = notes.filter(function(note) {
     return note.id !== id;
