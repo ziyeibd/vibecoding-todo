@@ -45,3 +45,6 @@ body {
   color: #777777;
   font-style: italic;
 }
+.filters {
+  margin: 12px 0;
+}

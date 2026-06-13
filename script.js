@@ -1,6 +1,8 @@
  const button = document.getElementById("helloButton");
   const message = document.getElementById("message");
-
+const showAllButton = document.getElementById("showAllButton");
+const showActiveButton = document.getElementById("showActiveButton");
+const showCompletedButton = document.getElementById("showCompletedButton");
   button.addEventListener("click", function() {
     message.textContent = "你好，这是我的第一个网页互动！";
   });
@@ -12,7 +14,8 @@
   const emptyMessage = document.getElementById("emptyMessage");
  
   let notes = JSON.parse(localStorage.getItem("notes")) || [];
- function saveNotes() {
+  let currentFilter = "all";
+  function saveNotes() {
   localStorage.setItem("notes", JSON.stringify(notes));
 }
  function renderNotes() {
@@ -24,8 +27,23 @@
 
   emptyMessage.textContent = "";
 
+  let visibleNotes = notes;
+
+  if (currentFilter === "active") {
+    visibleNotes = notes.filter(function(note) {
+      return note.completed === false;
+    });
+  }
+
+  if (currentFilter === "completed") {
+    visibleNotes = notes.filter(function(note) {
+      return note.completed === true;
+    });
+  }
+
   for (let index = 0; index < notes.length; index++) {
-    const note = notes[index];
+    const note = visibleNotes[index];
+    const originalIndex = notes.indexOf(note);
 
     noteList.innerHTML =
       noteList.innerHTML +
@@ -35,11 +53,11 @@
       "'>" +
       note.text +
       "</span>" +
-      " <button onclick='toggleNote(" +
-      index +
+     " <button onclick='toggleNote(" +
+      originalIndex +
       ")'>完成/取消</button>" +
       " <button onclick='deleteNote(" +
-      index +
+      originalIndex +
       ")'>删除</button>" +
       "</li>";
   }
@@ -75,3 +93,18 @@ clearNotesButton.addEventListener("click", function() {
   renderNotes();
 });
 renderNotes();
+
+showAllButton.addEventListener("click", function() {
+  currentFilter = "all";
+  renderNotes();
+});
+
+showActiveButton.addEventListener("click", function() {
+  currentFilter = "active";
+  renderNotes();
+});
+
+showCompletedButton.addEventListener("click", function() {
+  currentFilter = "completed";
+  renderNotes();
+});
