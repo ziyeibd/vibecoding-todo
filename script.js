@@ -54,22 +54,28 @@ const showCompletedButton = document.getElementById("showCompletedButton");
       note.text +
       "</span>" +
      " <button onclick='toggleNote(" +
-      originalIndex +
+      note.id +
       ")'>完成/取消</button>" +
       " <button onclick='deleteNote(" +
-      originalIndex +
+      note.id +
       ")'>删除</button>" +
       "</li>";
   }
 }
 function deleteNote(index) {
-  notes.splice(index, 1);
+   notes = notes.filter(function(note) {
+    return note.id !== id;
+  });
   saveNotes();
   renderNotes();
 }
 
 function toggleNote(index) {
-  notes[index].completed = !notes[index].completed;
+ for (let index = 0; index < notes.length; index++) {
+    if (notes[index].id === id) {
+      notes[index].completed = !notes[index].completed;
+    }
+  }
   saveNotes();
   renderNotes();
 }
@@ -79,8 +85,9 @@ function toggleNote(index) {
     alert("请先输入任务");
   } else {
     notes.push({
-  text: noteInput.value,
-  completed: false
+      id: Date.now(),
+      text: noteInput.value,
+      completed: false
 });;
     saveNotes();
     renderNotes();
