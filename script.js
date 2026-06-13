@@ -94,11 +94,14 @@ function toggleNote(id) {
   }
 });
 clearNotesButton.addEventListener("click", function() {
-  notes = [];
-  saveNotes();
-  renderNotes();
+  const shouldClear = confirm("确定要清空全部任务吗？");
+
+  if (shouldClear === true) {
+    notes = [];
+    saveNotes();
+    renderNotes();
+  }
 });
-renderNotes();
 
 showAllButton.addEventListener("click", function() {
   currentFilter = "all";
